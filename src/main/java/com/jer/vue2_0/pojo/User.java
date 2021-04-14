@@ -1,8 +1,19 @@
 package com.jer.vue2_0.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
+@JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     int id;
-    String uesrname;
+    String username;
     String password;
 
     public int getId() {
@@ -13,12 +24,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUesrname() {
-        return uesrname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUesrname(String uesrname) {
-        this.uesrname = uesrname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -29,4 +40,12 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
