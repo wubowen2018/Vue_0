@@ -19,15 +19,15 @@ public class LoginController {
     @CrossOrigin
     @PostMapping(value = "api/login")
     @ResponseBody
-    public Result login( @RequestBody User requestUser){
+    public User login( @RequestBody User requestUser){
         String username = requestUser.getUsername();
         username = HtmlUtils.htmlEscape(username);
 
         User user = userService.get(username, requestUser.getPassword());
         if (null == user) {
-            return new Result(400);
+            return user;
         } else {
-            return new Result(200);
+            return user;
         }
 
     }
