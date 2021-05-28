@@ -1,6 +1,8 @@
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
+
+```SQL
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -8,11 +10,50 @@ CREATE TABLE `user` (
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+```
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+
+```SQL
 INSERT INTO `user` VALUES ('1', 'admin', '123');
+```
+
+-- ----------------------------
+-- Table structure for book
+-- ----------------------------
+
+```SQL
+DROP TABLE IF EXISTS `book`;
+CREATE TABLE `book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cover` varchar(255) DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `author` varchar(255) DEFAULT '',
+  `date` varchar(20) DEFAULT '',
+  `press` varchar(255) DEFAULT '',
+  `abs` varchar(255) DEFAULT NULL,
+  `cid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_book_category_on_cid` (`cid`),
+  CONSTRAINT `fk_book_category_on_cid` FOREIGN KEY (`cid`) REFERENCES `category` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+```
+
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+```SQL
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
+
 
 
 tomcat的支持
@@ -59,6 +100,16 @@ public interface UserDAO extends JpaRepository<User,Integer> {
 2. 正向代理
 
     你要访问一个网站，比如“谷弟弟”，然后发现访问不到，于是你访问了一个能访问到“谷弟弟”的代理服务器，让它帮你拿到你想浏览的页面。
+
+---
+#### 每次运行时初始化数据库，如不需要可以注释掉
+
+直接运行项目就可以生成表结构（数据库需要手动创建）。关闭此功能，可以把 application.properties 中的如下代码注释掉
+
+```properties
+spring.datasource.initialization-mode=always
+```
+
 
 
  
