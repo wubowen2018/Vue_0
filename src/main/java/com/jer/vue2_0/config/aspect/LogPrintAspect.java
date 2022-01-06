@@ -43,7 +43,7 @@ public class LogPrintAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
-        // 获取 @WebLog 注解的描述信息
+        // 获取 @LogPrint 注解的描述信息
         String methodDescription = getAspectLogDescription(joinPoint);
         // 打印请求相关参数
         log.info("========================================== Start ==========================================");

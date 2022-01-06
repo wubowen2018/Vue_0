@@ -1,5 +1,6 @@
 package com.jer.vue2_0.controller;
 
+import com.jer.vue2_0.config.annotation.LogPrint;
 import com.jer.vue2_0.pojo.Book;
 import com.jer.vue2_0.service.BookService;
 import com.jer.vue2_0.utils.StringUtils;
@@ -18,12 +19,20 @@ public class LibraryController {
 
     @CrossOrigin
     @GetMapping("/api/books")
+    @LogPrint(description ="获取所有的书")
     public List<Book> list() throws Exception{
         return bookService.list();
     }
 
+    /*
+    * @Description
+    * @Params {link }
+    * @Return {type }
+    * @CreateTime 2021/7/27
+    */
     @CrossOrigin
     @PostMapping("/api/book")
+    @LogPrint(description ="更新或者添加一本书")
     public Book addOrUpdate(@RequestBody Book book) throws Exception{
         bookService.addOrUpdate(book);
         return book;
@@ -31,12 +40,14 @@ public class LibraryController {
 
     @CrossOrigin
     @PostMapping("/api/delete")
+    @LogPrint(description ="删除一本书")
     public void delete(@RequestBody Book book) throws Exception{
         bookService.deleteById(book.getId());
     }
 
     @CrossOrigin
     @GetMapping("/api/categories/{cid}/books")
+    @LogPrint(description ="按照分类查询书")
     public List<Book> listByCategrory(@PathVariable("cid") int cid) throws Exception{
         if (0 != cid){
             return bookService.listByCategory(cid);
@@ -47,6 +58,7 @@ public class LibraryController {
 
     @CrossOrigin
     @GetMapping("/api/search")
+    @LogPrint(description ="模糊搜索")
     public List<Book> searchResult(@RequestParam("keywords") String keywords) {
         // 关键词为空时查询出所有书籍
         if ("".equals(keywords)) {
@@ -58,6 +70,7 @@ public class LibraryController {
 
     @CrossOrigin
     @PostMapping("api/covers")
+    @LogPrint(description ="上传封面")
     public String coversUpload(MultipartFile file) throws Exception {
         String folder = "D:/workspace/img";
         File imageFolder = new File(folder);
@@ -74,8 +87,6 @@ public class LibraryController {
             return "";
         }
     }
-
-
 
 
 }
